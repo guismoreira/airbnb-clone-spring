@@ -1,0 +1,35 @@
+version: '3.7'
+volumes:
+    database:
+services:
+    db:
+        image: mysql:latest
+        container_name: airbnbclone-mysql
+        ports:
+            - 3306:3306
+        volumes:
+            - database:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=airbnbclone-service
+            - MYSQL_DATABASE=airbnbclone-service
+            - MYSQL_USER=airbnbclone-service
+            - MYSQL_PASSWORD=airbnbclone-service
+    phpMyAdmin:
+            image: phpmyadmin/phpmyadmin:latest
+            container_name: airbnbclone-phpmyadmin
+            environment:
+                - PMA_ARBITRARY=1
+            links:
+                - db
+            ports:
+                - 80:80
+            volumes:
+                - /sessions
+    # service:
+    #         depends_on: 
+    #             - "db"
+    #             - "phpMyAdmin"
+    #         container_name: airbnbclone-service
+    #         ports:
+    #             - 9080:9080
+    #             - 9443:9443
