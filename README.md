@@ -11,9 +11,8 @@ docker-compose up -d
 
 ## phpMyAdmin
 
-```
 http://localhost
-```
+
 
 
 ## Swagger ui
