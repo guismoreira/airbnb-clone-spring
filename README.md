@@ -2,19 +2,19 @@
 
 A DBServer challenge
 
-## Docker
+### Docker
 
 To start a local database
 ```
 docker-compose up -d
 ```
 
-## phpMyAdmin
+### phpMyAdmin
 
 http://localhost
 
 
 
-## Swagger ui
+### Swagger ui
 
 http://localhost:8080/swagger-ui/
