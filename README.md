@@ -4,7 +4,7 @@ A DBServer challenge
 
 ## Docker
 
-To start the a local database
+To start a local database
 ```
 docker-compose up -d
 ```
