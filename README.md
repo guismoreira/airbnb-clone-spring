@@ -1,8 +1,8 @@
 # airbnb-clone-spring
 
-A dbserver challenge
+A DBServer challenge
 
-## docker
+## Docker
 
 To start the database in a local way
 ```
