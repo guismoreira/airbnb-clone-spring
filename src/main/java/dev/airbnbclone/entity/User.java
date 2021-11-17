@@ -20,6 +20,11 @@ public class User {
 
     private String password;
 
+    private String phone;
+    
+    @Column(unique = true)
+    private String cpf;
+
     @Column(unique = true)
     private String email;
 
@@ -66,7 +71,7 @@ public class User {
         return null;
     }
     
-    public String getPassword(String md5) {
+    public String MD5(String md5) {
         try {
              java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
              byte[] array = md.digest(md5.getBytes());
@@ -87,6 +92,24 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCpf() {
+        return this.cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
 
 
     @Override

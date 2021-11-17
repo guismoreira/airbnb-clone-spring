@@ -6,11 +6,9 @@ import org.springframework.web.context.annotation.ApplicationScope;
 import dev.airbnbclone.entity.*;
 
 @ApplicationScope
-public interface UserDAO extends JpaRepository<User, Long>{
-    
-    User findByEmail(String email);
+public interface OfferDAO extends JpaRepository<Offer, Long>{
 
     @Override
-    void delete(User user);
+    void delete(Offer booking);
     
 }
