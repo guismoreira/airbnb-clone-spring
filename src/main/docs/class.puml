@@ -1,0 +1,45 @@
+@startuml
+title Airbnb Clone
+
+package dev.airbnbclone {
+
+    Address "1" -- "1..*" Offer
+    Booking "0..*" -- "1" Offer
+    Booking "0..*" -- "1" User
+    User "1" -- "0..*" Offer
+
+    class Address{
+        - String city
+        - String street
+        - String uf
+    }
+
+    class Booking{
+        - Double payment
+        - Long numberOfGuests
+        - String desired_dates
+    }
+
+    class Offer{
+        - int numberOfBeds
+        - boolean isWifi
+        - boolean isKitchen
+        - boolean isTV
+        - int rating
+        - Double price
+        - String available_dates
+        - String description
+    }
+    
+    class User {
+        - String name
+        - String password
+        - String phone
+        - String cpf
+        - String email
+    }
+
+
+}
+
+@enduml
