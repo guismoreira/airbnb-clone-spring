@@ -81,19 +81,16 @@ public class ServiceController extends BaseController {
             @RequestParam("isTV") final boolean isTV, @RequestParam("available_dates") final String available_dates,
             @RequestParam("city") final String city, @RequestParam("street") final String street,
             @RequestParam("description") final String description, @RequestParam("uf") final String uf,
-            @RequestParam("price") final Double price, @RequestParam("cpf") final String cpf,
-            @RequestParam("idBooking") Long idBooking) throws WebApplicationException {
+            @RequestParam("price") final Double price, @RequestParam("cpf") final String cpf) throws WebApplicationException {
 
         final Offer offer = new Offer();
 
         final Address address = new Address();
 
-        final Booking booking = bookingDAO.findById(idBooking).get();
-
         final User user = userDAO.findByCpf(cpf);
 
         // this offer cannot have the same user booking it.
-        if (booking.getUser() != null || available_dates.isEmpty() || user == null || description.isEmpty() || price == null) {
+        if (available_dates.isEmpty() || user == null || description.isEmpty() || price == null) {
             ResponseBuilderImpl builder = new ResponseBuilderImpl();
             builder.status(Response.Status.BAD_REQUEST);
             builder.entity("name cannot be empty");
@@ -136,7 +133,7 @@ public class ServiceController extends BaseController {
         final User user = userDAO.findByCpf(cpf);
         
         // this reservation cannot have the same user offering it.
-        if (offer.getUser() != null || desired_dates.isEmpty() || user == null || numberOfGuests == null || payment == null) {
+        if (desired_dates.isEmpty() || user == null || numberOfGuests == null || payment == null) {
             ResponseBuilderImpl builder = new ResponseBuilderImpl();
             builder.status(Response.Status.BAD_REQUEST);
             builder.entity("name cannot be empty");

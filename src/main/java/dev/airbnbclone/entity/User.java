@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -28,16 +30,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Please enter name")
     private String name;
 
+    @NotEmpty(message = "Please enter password")
     private String password;
 
+    @NotEmpty(message = "Please enter phone")
     private String phone;
 
+    @NotEmpty(message = "Please enter cpf")
     @Column(unique = true)
     private String cpf;
 
+    @NotEmpty(message = "Please enter email")
     @Column(unique = true)
+    @Email(message = "{user.email.invalid}")
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
