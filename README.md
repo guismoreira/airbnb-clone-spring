@@ -1,12 +1,20 @@
 # airbnb-clone-spring
 
-A dbserver challenge
+A DBServer challenge
 
-## docker
+### Docker
 
-To start the database in a local way
+To start a local database
+```
 docker-compose up -d
+```
 
-## Swagger ui
+### phpMyAdmin
+
+http://localhost
+
+
+
+### Swagger ui
 
 http://localhost:8080/swagger-ui/
