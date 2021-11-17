@@ -80,12 +80,19 @@ public class ServiceController extends BaseController {
             @RequestParam("isTV") final boolean isTV, @RequestParam("available_dates") final String available_dates,
             @RequestParam("city") final String city, @RequestParam("street") final String street,
             @RequestParam("description") final String description, @RequestParam("uf") final String uf,
-            @RequestParam("price") final Double price) throws WebApplicationException {
+            @RequestParam("price") final Double price, @RequestParam("cpf") final String cpf,
+            @RequestParam("idBooking") Long idBooking) throws WebApplicationException {
 
         final Offer offer = new Offer();
+
         final Address address = new Address();
 
-        if (available_dates.isEmpty() || description.isEmpty() || price == null) {
+        final Booking booking = bookingDAO.findById(idBooking).get();
+
+        final User user = userDAO.findByCpf(cpf);
+
+        // this offer cannot have the same user booking it.
+        if (booking.getUser() != null || available_dates.isEmpty() || user == null || description.isEmpty() || price == null) {
             ResponseBuilderImpl builder = new ResponseBuilderImpl();
             builder.status(Response.Status.BAD_REQUEST);
             builder.entity("name cannot be empty");
@@ -100,6 +107,7 @@ public class ServiceController extends BaseController {
             offer.setPrice(price);
             offer.setIsTV(isTV);
             offer.setIsWifi(isWifi);
+            offer.setUser(user);
 
             address.setCity(city);
             address.setStreet(street);
@@ -116,14 +124,18 @@ public class ServiceController extends BaseController {
     @Transactional
     @RequestMapping(value = "createBooking", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public Booking createBooking(@RequestParam("payment") final Double payment,
-    @RequestParam("numberOfGuests") final Long numberOfGuests,
-    @RequestParam("desired_dates") final String desired_dates,
-    @RequestParam("id") final Long id) throws WebApplicationException {
+        @RequestParam("numberOfGuests") final Long numberOfGuests,
+        @RequestParam("desired_dates") final String desired_dates,
+        @RequestParam("idOffer") final Long idOffer, @RequestParam("cpf") final String cpf) throws WebApplicationException {
 
         final Booking booking = new Booking();
-        final Offer offer = offerDAO.getById(id);
+        
+        final Offer offer = offerDAO.findById(idOffer).get();
 
-        if (desired_dates.isEmpty() || numberOfGuests == null || payment == null) {
+        final User user = userDAO.findByCpf(cpf);
+        
+        // this reservation cannot have the same user offering it.
+        if (offer.getUser() != null || desired_dates.isEmpty() || user == null || numberOfGuests == null || payment == null) {
             ResponseBuilderImpl builder = new ResponseBuilderImpl();
             builder.status(Response.Status.BAD_REQUEST);
             builder.entity("name cannot be empty");
@@ -135,6 +147,7 @@ public class ServiceController extends BaseController {
             booking.setNumberOfGuests(numberOfGuests);
             booking.setPayment(payment);
             booking.setOffer(offer);
+            booking.setUser(user);
 
 
             bookingDAO.save(booking);
