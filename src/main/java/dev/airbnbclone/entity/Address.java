@@ -19,10 +19,10 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 @Entity
-@SequenceGenerator(name="address_seq", sequenceName = "address_seq",initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "address_seq", sequenceName = "address_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "address")
 public class Address {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,20 +33,15 @@ public class Address {
 
     private String uf;
 
-
-    @OneToMany(
-        mappedBy = "address", 
-        cascade = CascadeType.ALL, 
-        fetch = FetchType.EAGER, 
-        orphanRemoval = true)    
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     @Fetch(value = FetchMode.SUBSELECT)
     public Set<Offer> offers = new HashSet<>();
 
-    public void addOffer(Offer offer){
+    public void addOffer(Offer offer) {
         offers.add(offer);
-    offer.setAddress(this);
-}
+        offer.setAddress(this);
+    }
 
     public Long getId() {
         return this.id;
@@ -87,6 +82,5 @@ public class Address {
     public void setOffers(Set<Offer> offers) {
         this.offers = offers;
     }
-
 
 }

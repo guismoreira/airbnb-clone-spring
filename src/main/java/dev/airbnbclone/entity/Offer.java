@@ -1,6 +1,5 @@
 package dev.airbnbclone.entity;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,27 +45,34 @@ public class Offer {
     private String available_dates;
 
     private String description;
-    
 
-    @OneToMany(
-        mappedBy = "offer", 
-        cascade = CascadeType.ALL, 
-        fetch = FetchType.EAGER, 
-        orphanRemoval = true)    
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     @Fetch(value = FetchMode.SUBSELECT)
     public Set<Booking> bookings = new HashSet<>();
 
-    public void addBooking(Booking booking){
+    public void addBooking(Booking booking) {
         bookings.add(booking);
-    booking.setOffer(this);
+        booking.setOffer(this);
     }
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id",referencedColumnName = "id")
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     @JsonBackReference
     public Address address;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonBackReference
+    public User user;
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Address getAddress() {
         return this.address;
@@ -76,7 +82,6 @@ public class Offer {
         this.address = address;
     }
 
-
     public String getDescription() {
         return this.description;
     }
@@ -85,7 +90,6 @@ public class Offer {
         this.description = description;
     }
 
-
     public Double getPrice() {
         return this.price;
     }
@@ -93,8 +97,6 @@ public class Offer {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-
 
     public Long getId() {
         return this.id;
@@ -171,8 +173,5 @@ public class Offer {
     public void setBookings(Set<Booking> bookings) {
         this.bookings = bookings;
     }
-
-
-
 
 }

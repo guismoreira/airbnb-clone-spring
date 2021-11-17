@@ -1,12 +1,24 @@
 package dev.airbnbclone.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "user")
@@ -21,12 +33,48 @@ public class User {
     private String password;
 
     private String phone;
-    
+
     @Column(unique = true)
     private String cpf;
 
     @Column(unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
+    public Set<Offer> offers = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
+    public Set<Booking> bookings = new HashSet<>();
+
+    public Set<Booking> getBookings() {
+        return this.bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+        booking.setUser(this);
+    }
+
+    public void addOffer(Offer offer) {
+        offers.add(offer);
+        offer.setUser(this);
+    }
+
+    public Set<Offer> getOffers() {
+        return this.offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
 
     public User() {
         super();
@@ -70,20 +118,20 @@ public class User {
         }
         return null;
     }
-    
+
     public String MD5(String md5) {
         try {
-             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-             byte[] array = md.digest(md5.getBytes());
-             StringBuffer sb = new StringBuffer();
-             for (int i = 0; i < array.length; ++i) {
-               sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
             }
-             return this.password = sb.toString();
-         } catch (java.security.NoSuchAlgorithmException e) {
-         }
-         return null;
-     }
+            return this.password = sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
+    }
 
     public String getEmail() {
         return this.email;
@@ -92,7 +140,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public String getPhone() {
         return this.phone;
@@ -109,8 +156,6 @@ public class User {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
-
 
     @Override
     public boolean equals(final Object obj) {
@@ -129,7 +174,5 @@ public class User {
         }
         return true;
     }
-
-
 
 }

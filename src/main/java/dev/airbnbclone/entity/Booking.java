@@ -27,13 +27,23 @@ public class Booking {
 
     private String desired_dates;
 
-
-
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "offer_id",referencedColumnName = "id")
+    @JoinColumn(name = "offer_id", referencedColumnName = "id")
     @JsonBackReference
     public Offer offer;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonBackReference
+    public User user;
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getDesired_dates() {
         return this.desired_dates;
@@ -42,7 +52,6 @@ public class Booking {
     public void setDesired_dates(String desired_dates) {
         this.desired_dates = desired_dates;
     }
-
 
     public Double getPayment() {
         return this.payment;
@@ -60,10 +69,8 @@ public class Booking {
         this.offer = offer;
     }
 
-
     public Booking() {
     }
-
 
     public Long getId() {
         return this.id;
@@ -80,8 +87,5 @@ public class Booking {
     public void setNumberOfGuests(Long numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
     }
-
-
-
 
 }

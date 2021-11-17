@@ -143,8 +143,8 @@ public class ServiceController extends BaseController {
     }
 
     @Transactional
-    @RequestMapping(value = "listAll", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public List<Offer> listAll() throws WebApplicationException {
+    @RequestMapping(value = "listAllOffer", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public List<Offer> listAllOffer() throws WebApplicationException {
 
         return(List<Offer>) offerDAO.findAll();
     }
