@@ -93,7 +93,7 @@ public class ServiceController extends BaseController {
         if (available_dates.isEmpty() || user == null || description.isEmpty() || price == null) {
             ResponseBuilderImpl builder = new ResponseBuilderImpl();
             builder.status(Response.Status.BAD_REQUEST);
-            builder.entity("name cannot be empty");
+            builder.entity("cannot be empty");
             Response response = builder.build();
             throw new WebApplicationException(response);
 
@@ -136,7 +136,7 @@ public class ServiceController extends BaseController {
         if (desired_dates.isEmpty() || user == null || numberOfGuests == null || payment == null) {
             ResponseBuilderImpl builder = new ResponseBuilderImpl();
             builder.status(Response.Status.BAD_REQUEST);
-            builder.entity("name cannot be empty");
+            builder.entity("cannot be empty");
             Response response = builder.build();
             throw new WebApplicationException(response);
 
