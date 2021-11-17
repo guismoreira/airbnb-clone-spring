@@ -1,16 +1,22 @@
 package dev.airbnbclone.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @SequenceGenerator(name="address_seq", sequenceName = "address_seq",initialValue = 1, allocationSize = 1)
@@ -19,7 +25,7 @@ public class Address {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String city;
 
@@ -27,28 +33,28 @@ public class Address {
 
     private String uf;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "booking_id",referencedColumnName = "id")
-    @JsonBackReference
-    public Booking booking;
 
+    @OneToMany(
+        mappedBy = "address", 
+        cascade = CascadeType.ALL, 
+        fetch = FetchType.EAGER, 
+        orphanRemoval = true)    
+    @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
+    public Set<Offer> offers = new HashSet<>();
 
-    public long getId() {
+    public void addOffer(Offer offer){
+        offers.add(offer);
+    offer.setAddress(this);
+}
+
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
-
-    public Booking getBooking() {
-        return this.booking;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
-
 
     public String getCity() {
         return this.city;
@@ -72,6 +78,14 @@ public class Address {
 
     public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public Set<Offer> getOffers() {
+        return this.offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
 
 

@@ -1,5 +1,7 @@
 package dev.airbnbclone.controller;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
 
 import dev.airbnbclone.entity.Address;
+import dev.airbnbclone.entity.Booking;
 import dev.airbnbclone.entity.Offer;
 import dev.airbnbclone.entity.User;
 
@@ -77,7 +80,7 @@ public class ServiceController extends BaseController {
             @RequestParam("isTV") final boolean isTV, @RequestParam("available_dates") final String available_dates,
             @RequestParam("city") final String city, @RequestParam("street") final String street,
             @RequestParam("description") final String description, @RequestParam("uf") final String uf,
-            @RequestParam("price") final Long price) throws WebApplicationException {
+            @RequestParam("price") final Double price) throws WebApplicationException {
 
         final Offer offer = new Offer();
         final Address address = new Address();
@@ -102,9 +105,48 @@ public class ServiceController extends BaseController {
             address.setStreet(street);
             address.setUf(uf);
 
+            offer.setAddress(address);
+
             offerDAO.save(offer);
         }
         return offer;
+    }
+
+
+    @Transactional
+    @RequestMapping(value = "createBooking", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public Booking createBooking(@RequestParam("payment") final Double payment,
+    @RequestParam("numberOfGuests") final Long numberOfGuests,
+    @RequestParam("desired_dates") final String desired_dates,
+    @RequestParam("id") final Long id) throws WebApplicationException {
+
+        final Booking booking = new Booking();
+        final Offer offer = offerDAO.getById(id);
+
+        if (desired_dates.isEmpty() || numberOfGuests == null || payment == null) {
+            ResponseBuilderImpl builder = new ResponseBuilderImpl();
+            builder.status(Response.Status.BAD_REQUEST);
+            builder.entity("name cannot be empty");
+            Response response = builder.build();
+            throw new WebApplicationException(response);
+
+        } else {
+            booking.setDesired_dates(desired_dates);
+            booking.setNumberOfGuests(numberOfGuests);
+            booking.setPayment(payment);
+            booking.setOffer(offer);
+
+
+            bookingDAO.save(booking);
+        }
+        return booking;
+    }
+
+    @Transactional
+    @RequestMapping(value = "listAll", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public List<Offer> listAll() throws WebApplicationException {
+
+        return(List<Offer>) offerDAO.findAll();
     }
 
 }

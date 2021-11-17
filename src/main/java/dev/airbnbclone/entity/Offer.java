@@ -10,10 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.Fetch;
@@ -26,7 +29,7 @@ public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private int numberOfBeds;
 
@@ -38,11 +41,12 @@ public class Offer {
 
     private int rating;
 
-    private Long price;
+    private Double price;
 
     private String available_dates;
 
     private String description;
+    
 
     @OneToMany(
         mappedBy = "offer", 
@@ -58,6 +62,20 @@ public class Offer {
     booking.setOffer(this);
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id",referencedColumnName = "id")
+    @JsonBackReference
+    public Address address;
+
+
+    public Address getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
 
     public String getDescription() {
         return this.description;
@@ -68,21 +86,21 @@ public class Offer {
     }
 
 
-    public Long getPrice() {
+    public Double getPrice() {
         return this.price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
 
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

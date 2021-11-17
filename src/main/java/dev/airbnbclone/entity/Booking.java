@@ -1,25 +1,16 @@
 package dev.airbnbclone.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq", initialValue = 1, allocationSize = 1)
@@ -28,22 +19,15 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private int payment;
+    private Double payment;
 
-    private int numberOfGuests;
+    private Long numberOfGuests;
 
     private String desired_dates;
 
-    @OneToMany(
-        mappedBy = "booking", 
-        cascade = CascadeType.ALL, 
-        fetch = FetchType.EAGER, 
-        orphanRemoval = true)    
-    @JsonManagedReference
-    @Fetch(value = FetchMode.SUBSELECT)
-    public Set<Address> addresses = new HashSet<>();
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offer_id",referencedColumnName = "id")
@@ -60,11 +44,11 @@ public class Booking {
     }
 
 
-    public int getPayment() {
+    public Double getPayment() {
         return this.payment;
     }
 
-    public void setPayment(int payment) {
+    public void setPayment(Double payment) {
         this.payment = payment;
     }
 
@@ -77,37 +61,23 @@ public class Booking {
     }
 
 
-    public Set<Address> getAddresses() {
-        return this.addresses;
-    }
-
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    public void addBooking(Address address){
-        addresses.add(address);
-    address.setBooking(this);
-    }
-
-
     public Booking() {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumberOfGuests() {
+    public Long getNumberOfGuests() {
         return this.numberOfGuests;
     }
 
-    public void setNumberOfGuests(int numberOfGuests) {
+    public void setNumberOfGuests(Long numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
     }
 
