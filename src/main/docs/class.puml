@@ -18,8 +18,6 @@ package dev.airbnbclone {
         - Double payment
         - Long numberOfGuests
         - String desired_dates
-        - Long idOffer
-        - String cpf
     }
 
     class Offer{
@@ -31,8 +29,6 @@ package dev.airbnbclone {
         - Double price
         - String available_dates
         - String description
-        - Long idBooking
-        - String cpf
     }
     
     class User {
