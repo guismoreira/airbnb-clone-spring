@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.specimpl.ResponseBuilderImpl;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,7 @@ import dev.airbnbclone.entity.User;
 public class ServiceController extends BaseController {
 
     @Transactional
+    @CrossOrigin
     @RequestMapping(value = "createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public User createUser(@RequestParam("name") final String name, @RequestParam("password") final String password,
             @RequestParam("email") final String email, @RequestParam("cpf") final String cpf, @RequestParam("phone") final String phone) throws WebApplicationException {
