@@ -53,6 +53,7 @@ public class ServiceController extends BaseController {
     }
 
     @Transactional
+    @CrossOrigin
     @RequestMapping(value = "loginUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public String loginUser(@RequestParam("password") final String password, @RequestParam("email") final String email)
             throws WebApplicationException {
@@ -78,6 +79,7 @@ public class ServiceController extends BaseController {
     }
 
     @Transactional
+    @CrossOrigin
     @RequestMapping(value = "createOffer", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public Offer createOffer(@RequestParam("numberOfBeds") final int numberOfBeds,
             @RequestParam("isWifi") final boolean isWifi, @RequestParam("isKitchen") final boolean isKitchen,
@@ -123,6 +125,7 @@ public class ServiceController extends BaseController {
 
 
     @Transactional
+    @CrossOrigin
     @RequestMapping(value = "createBooking", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public Booking createBooking(@RequestParam("payment") final Double payment,
         @RequestParam("numberOfGuests") final Long numberOfGuests,
@@ -157,6 +160,7 @@ public class ServiceController extends BaseController {
     }
 
     @Transactional
+    @CrossOrigin
     @RequestMapping(value = "listAllOffer", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public List<Offer> listAllOffer() throws WebApplicationException {
 
