@@ -27,7 +27,7 @@ public class ServiceController extends BaseController {
     @Transactional
     @RequestMapping(value = "createUser", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public User createUser(@RequestParam("name") final String name, @RequestParam("password") final String password,
-            @RequestParam("email") final String email, @RequestParam("cpf") final String cpf) throws WebApplicationException {
+            @RequestParam("email") final String email, @RequestParam("cpf") final String cpf, @RequestParam("phone") final String phone) throws WebApplicationException {
 
         final User user = new User();
         final User userExist = userDAO.findByEmail(email);
@@ -42,6 +42,7 @@ public class ServiceController extends BaseController {
         } else {
             user.setName(name);
             user.setCpf(cpf);
+            user.setPhone(phone);
             user.setEmail(email);
             user.setPassword(password);
             userDAO.save(user);
