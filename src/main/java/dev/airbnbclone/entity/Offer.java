@@ -174,4 +174,24 @@ public class Offer {
         this.bookings = bookings;
     }
 
+
+    public Offer(int numberOfBeds, boolean isWifi, boolean isKitchen, boolean isTV, Double price, String available_dates, String description) {
+        this.numberOfBeds = numberOfBeds;
+        this.isWifi = isWifi;
+        this.isKitchen = isKitchen;
+        this.isTV = isTV;
+        this.rating = 0;
+        this.price = price;
+        this.available_dates = available_dates;
+        this.description = description;
+        this.bookings = null;
+        this.address = null;
+        this.user = null;
+    }
+
+
+    public Offer() {
+    }
+
+
 }
