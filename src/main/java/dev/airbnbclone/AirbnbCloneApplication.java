@@ -24,8 +24,8 @@ public class AirbnbCloneApplication extends BaseController{
 			final User user = new User("jose", "asdasd", "519191", "035", "jose@email.com");
 			userDAO.save(user);
 
-			// final Offer offer = new Offer(3, true, true, true, 200.0, "november", "bela residencia");
-			// offerDAO.save(offer);
+			final Offer offer = new Offer(3, true, true, true, 200.0, "november", "bela residencia");
+			offerDAO.save(offer);
 		};
 
 }}
