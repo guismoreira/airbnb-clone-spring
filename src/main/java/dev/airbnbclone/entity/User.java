@@ -48,42 +48,6 @@ public class User {
     @Email(message = "{user.email.invalid}")
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonManagedReference
-    @Fetch(value = FetchMode.SUBSELECT)
-    public Set<Offer> offers = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonManagedReference
-    @Fetch(value = FetchMode.SUBSELECT)
-    public Set<Booking> bookings = new HashSet<>();
-
-    public Set<Booking> getBookings() {
-        return this.bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    public void addBooking(Booking booking) {
-        bookings.add(booking);
-        booking.setUser(this);
-    }
-
-    public void addOffer(Offer offer) {
-        offers.add(offer);
-        offer.setUser(this);
-    }
-
-    public Set<Offer> getOffers() {
-        return this.offers;
-    }
-
-    public void setOffers(Set<Offer> offers) {
-        this.offers = offers;
-    }
-
     public User() {
         super();
     }
@@ -182,5 +146,15 @@ public class User {
         }
         return true;
     }
+
+
+    public User(String name, String password, String phone, String cpf, String email) {
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.cpf = cpf;
+        this.email = email;
+    }
+
 
 }

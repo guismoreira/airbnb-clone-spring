@@ -6,6 +6,7 @@ import dev.airbnbclone.data.AddressDAO;
 import dev.airbnbclone.data.BookingDAO;
 import dev.airbnbclone.data.OfferDAO;
 import dev.airbnbclone.data.UserDAO;
+import dev.airbnbclone.service.PublicService;
 
 public class BaseController {
     
@@ -20,6 +21,9 @@ public class BaseController {
 
     @Autowired
     protected OfferDAO offerDAO;
+
+    @Autowired
+    protected PublicService publicService;
 
 
 }

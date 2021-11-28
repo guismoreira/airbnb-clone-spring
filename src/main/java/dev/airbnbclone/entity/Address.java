@@ -33,16 +33,6 @@ public class Address {
 
     private String uf;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonManagedReference
-    @Fetch(value = FetchMode.SUBSELECT)
-    public Set<Offer> offers = new HashSet<>();
-
-    public void addOffer(Offer offer) {
-        offers.add(offer);
-        offer.setAddress(this);
-    }
-
     public Long getId() {
         return this.id;
     }
@@ -75,12 +65,6 @@ public class Address {
         this.uf = uf;
     }
 
-    public Set<Offer> getOffers() {
-        return this.offers;
-    }
 
-    public void setOffers(Set<Offer> offers) {
-        this.offers = offers;
-    }
 
 }
