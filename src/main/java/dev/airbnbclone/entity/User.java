@@ -183,4 +183,16 @@ public class User {
         return true;
     }
 
+
+    public User(String name, String password, String phone, String cpf, String email) {
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.cpf = cpf;
+        this.email = email;
+        this.offers = null;
+        this.bookings = null;
+    }
+
+
 }
