@@ -30,7 +30,7 @@ import dev.airbnbclone.entity.User;
 public class PublicController extends BaseController {
 
     @CrossOrigin
-    @RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = "application/json;charset",consumes = "application/json;charset")
+    @RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Message> createUser(@RequestBody User user) {
 
         final User userExist = userDAO.findByEmail(user.getEmail());
