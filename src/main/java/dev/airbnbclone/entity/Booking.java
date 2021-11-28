@@ -27,14 +27,12 @@ public class Booking {
 
     private String desired_dates;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "offer_id", referencedColumnName = "id")
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
     public Offer offer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     public User user;
 
     public User getUser() {

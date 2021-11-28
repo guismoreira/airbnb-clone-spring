@@ -46,24 +46,12 @@ public class Offer {
 
     private String description;
 
-    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonManagedReference
-    @Fetch(value = FetchMode.SUBSELECT)
-    public Set<Booking> bookings = new HashSet<>();
-
-    public void addBooking(Booking booking) {
-        bookings.add(booking);
-        booking.setOffer(this);
-    }
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "address_id")
     public Address address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     public User user;
 
     public User getUser() {
@@ -166,14 +154,6 @@ public class Offer {
         this.available_dates = available_dates;
     }
 
-    public Set<Booking> getBookings() {
-        return this.bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
 
     public Offer(int numberOfBeds, boolean isWifi, boolean isKitchen, boolean isTV, Double price, String available_dates, String description) {
         this.numberOfBeds = numberOfBeds;
@@ -184,7 +164,6 @@ public class Offer {
         this.price = price;
         this.available_dates = available_dates;
         this.description = description;
-        this.bookings = null;
         this.address = null;
         this.user = null;
     }

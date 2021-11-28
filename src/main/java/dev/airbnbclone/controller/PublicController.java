@@ -30,7 +30,7 @@ import dev.airbnbclone.entity.User;
 public class PublicController extends BaseController {
 
     @CrossOrigin
-    @RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = "application/json;charset",consumes = "application/json;charset")
     public ResponseEntity<Message> createUser(@RequestBody User user) {
 
         final User userExist = userDAO.findByEmail(user.getEmail());
@@ -66,7 +66,7 @@ public class PublicController extends BaseController {
     // }
 
     @CrossOrigin
-    @RequestMapping(value = "/createOffer", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/createOffer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Message> createOffer(@RequestBody Offer offer) {
 
 		this.publicService.createOffer(offer);
@@ -77,7 +77,7 @@ public class PublicController extends BaseController {
 
 
     @CrossOrigin
-    @RequestMapping(value = "/createBooking", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/createBooking", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Message> createBooking(@RequestBody Booking booking) {
 
 		this.publicService.createBooking(booking);
